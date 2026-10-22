@@ -1,0 +1,17 @@
+{
+	"required": true,
+	"package": "com.monhenjo.nonick.client.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"ChatListenerMixin",
+		"ClientPacketListenerMixin",
+		"EntityRendererMixin",
+		"PlayerTabOverlayMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

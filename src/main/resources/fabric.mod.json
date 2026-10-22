@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "nonick",
+	"version": "${version}",
+	"name": "NoNick",
+	"description": "Shows the real Minecraft account name behind server nicknames. It rewrites nametags, the tab list, and chat, and can ask Mojang which account owns a UUID when a server replaces the profile name itself.",
+	"authors": [
+		"monhenjo"
+	],
+	"contact": {
+		"homepage": "https://github.com/monhenjo/nonick",
+		"sources": "https://github.com/monhenjo/nonick"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/nonick/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.monhenjo.nonick.client.NoNickClient"
+		],
+		"modmenu": [
+			"com.monhenjo.nonick.client.config.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		{
+			"config": "nonick.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "${minecraft_dependency}",
+		"java": ">=25",
+		"fabric-api": "*",
+		"cloth-config": "${cloth_config_dependency}"
+	},
+	"suggests": {
+		"modmenu": "*"
+	}
+}

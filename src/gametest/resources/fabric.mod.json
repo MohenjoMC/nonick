@@ -1,0 +1,17 @@
+{
+	"schemaVersion": 1,
+	"id": "nonick-gametest",
+	"version": "1.0.0",
+	"name": "NoNick client tests",
+	"environment": "client",
+	"entrypoints": {
+		"fabric-client-gametest": [
+			"com.monhenjo.nonick.gametest.NoNickClientGameTest"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"nonick": "*"
+	}
+}
