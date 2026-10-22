@@ -2,6 +2,7 @@ package com.monhenjo.nonick.client.name;
 
 import com.mojang.authlib.GameProfile;
 import com.monhenjo.nonick.NoNick;
+import com.monhenjo.nonick.client.ClientCompat;
 import com.monhenjo.nonick.client.config.NoNickConfig;
 import com.monhenjo.nonick.client.config.NoNickConfigManager;
 import net.minecraft.ChatFormatting;
@@ -288,10 +289,10 @@ public final class NameMapper {
 		announced.put(known.id(), known.realName());
 
 		Minecraft minecraft = Minecraft.getInstance();
-		if (minecraft == null || minecraft.gui == null || minecraft.gui.hud == null) {
+		if (minecraft == null) {
 			return;
 		}
-		minecraft.gui.hud.getChat().addClientSystemMessage(
+		ClientCompat.addClientChatMessage(minecraft,
 			Component.literal("[NoNick] ").withStyle(ChatFormatting.DARK_GRAY)
 				.append(Component.translatable("text.nonick.detected", nick, known.realName())
 					.withStyle(ChatFormatting.YELLOW))

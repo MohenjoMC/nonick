@@ -29,21 +29,21 @@ public final class NoNickClient implements ClientModInitializer {
 
 	public static final KeyMapping TOGGLE_KEY = new KeyMapping(
 		"key.nonick.toggle",
-		InputConstants.Type.KEYBOARD,
+		ClientCompat.keyboardType(),
 		InputConstants.KEY_F6,
 		CATEGORY
 	);
 
 	public static final KeyMapping CONFIG_KEY = new KeyMapping(
 		"key.nonick.config",
-		InputConstants.Type.KEYBOARD,
+		ClientCompat.keyboardType(),
 		InputConstants.KEY_F7,
 		CATEGORY
 	);
 
 	public static final KeyMapping COPY_KEY = new KeyMapping(
 		"key.nonick.copy",
-		InputConstants.Type.KEYBOARD,
+		ClientCompat.keyboardType(),
 		InputConstants.UNKNOWN.getValue(),
 		CATEGORY
 	);
@@ -98,7 +98,7 @@ public final class NoNickClient implements ClientModInitializer {
 
 	public static void openConfigScreen(Minecraft minecraft) {
 		try {
-			Screen parent = minecraft.gui.screen();
+			Screen parent = ClientCompat.currentScreen(minecraft);
 			Screen screen = AutoConfigClient.getConfigScreen(NoNickConfig.class, parent).get();
 			minecraft.setScreenAndShow(screen);
 		} catch (Exception error) {
@@ -121,6 +121,6 @@ public final class NoNickClient implements ClientModInitializer {
 	}
 
 	public static void overlay(Minecraft minecraft, Component message) {
-		minecraft.gui.hud.setOverlayMessage(message, false);
+		ClientCompat.setOverlayMessage(minecraft, message);
 	}
 }

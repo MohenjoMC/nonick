@@ -1,5 +1,6 @@
 package com.monhenjo.nonick.gametest;
 
+import com.monhenjo.nonick.client.ClientCompat;
 import com.monhenjo.nonick.client.NoNickClient;
 import com.monhenjo.nonick.client.config.NoNickConfigManager;
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
@@ -25,12 +26,12 @@ public final class NoNickClientGameTest implements FabricClientGameTest {
 			context.runOnClient(NoNickClient::openConfigScreen);
 			context.waitTicks(20);
 
-			boolean screenOpen = context.computeOnClient(minecraft -> minecraft.gui.screen() != null);
+			boolean screenOpen = context.computeOnClient(minecraft -> ClientCompat.currentScreen(minecraft) != null);
 			if (!screenOpen) {
 				throw new AssertionError("NoNick settings screen did not open");
 			}
 			context.takeScreenshot("nonick-settings");
-			context.runOnClient(minecraft -> minecraft.gui.setScreen(null));
+			context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
 
 			context.runOnClient(minecraft -> minecraft.player.connection.sendCommand("nonick status"));
 			context.waitTicks(10);
