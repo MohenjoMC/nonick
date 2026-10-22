@@ -42,6 +42,11 @@ drawn.
 Everything happens on your client. No packets are sent to the server except
 the optional Mojang UUID lookup described below.
 
+## Download
+
+- Modrinth: https://modrinth.com/mod/nonick
+- GitHub releases: https://github.com/MohenjoMC/nonick/releases
+
 ## Install
 
 1. Install Fabric Loader 0.19.5 or newer for Minecraft 26.3.
