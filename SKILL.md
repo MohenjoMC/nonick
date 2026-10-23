@@ -1,5 +1,5 @@
 ---
-name: nonick-testing
+name: mod-development-testing
 description: "Testing loop for the NoNick client-side Fabric mod (MohenjoMC/nonick) — unit-test the name parser, run the Loom client gametest and read back screenshots, verify mixin targets against decompiled Minecraft sources, and build the whole 26.x matrix with -P overrides. Use when building, testing or debugging NoNick, adding a mixin or resolution step, porting to a new 26.x release, or when a gradle run misbehaves on the Mac or e3 build hosts."
 version: 1.0.0
 author: MohenjoMC
@@ -11,7 +11,7 @@ metadata:
     category: minecraft-modding
 ---
 
-# nonick-testing
+# Mod development testing
 
 NoNick rewrites player names on the client: nametags, tab list, chat, server
 messages. Three test layers answer three different questions, in order. Run the
