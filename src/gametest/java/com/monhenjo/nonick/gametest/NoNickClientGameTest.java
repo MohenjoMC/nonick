@@ -52,10 +52,42 @@ public final class NoNickClientGameTest implements FabricClientGameTest {
 
 			singleplayer.getServer().runCommand("scoreboard objectives add nonick_test dummy");
 			singleplayer.getServer().runCommand("scoreboard objectives setdisplay list nonick_test");
-			context.getInput().holdKey(options -> options.keyPlayerList);
+			context.waitTicks(20);
+
+			// A singleplayer world with one listed player hides the tab list
+			// even while Tab is held unless a list objective exists. Check the
+			// objective before trusting the screenshot.
+			boolean hasListObjective = context.computeOnClient(minecraft ->
+				minecraft.level.getScoreboard().getDisplayObjective(net.minecraft.world.scores.DisplaySlot.LIST) != null);
+			if (!hasListObjective) {
+				throw new AssertionError("test objective did not reach the client scoreboard");
+			}
+
+			// Set the key state directly instead of sending a keyboard event.
+			// An SSH session on a headless-ish host can leave the window
+			// unfocused, and a dropped key event makes this screenshot show an
+			// empty world with no tab list, which proves nothing.
+			context.runOnClient(minecraft -> minecraft.options.keyPlayerList.setDown(true));
 			context.waitTicks(5);
+
+			boolean keyDown = context.computeOnClient(minecraft -> minecraft.options.keyPlayerList.isDown());
+			if (!keyDown) {
+				throw new AssertionError("tab list key did not stay down");
+			}
+
+			String realName = context.computeOnClient(minecraft -> minecraft.player.getGameProfile().name());
+			String tabName = context.computeOnClient(minecraft -> {
+				var info = minecraft.getConnection().getPlayerInfo(minecraft.player.getUUID());
+				if (info == null) {
+					throw new AssertionError("local player info is missing");
+				}
+				return minecraft.gui.hud.getTabList().getNameForDisplay(info).getString();
+			});
+			if (!realName.equals(tabName)) {
+				throw new AssertionError("tab list still shows the nickname: " + tabName);
+			}
 			context.takeScreenshot("nonick-tab");
-			context.getInput().releaseKey(options -> options.keyPlayerList);
+			context.runOnClient(minecraft -> minecraft.options.keyPlayerList.setDown(false));
 		}
 	}
 }

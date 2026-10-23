@@ -107,9 +107,13 @@ Sequencing rules that keep the test honest:
 
 - `context.waitTicks(n)` after every mutation — render code needs real ticks.
 - Prefer `context.computeOnClient(...)` for assertions that need a value.
-- Drive the keyboard for the tab list:
-  `context.getInput().holdKey(o -> o.keyPlayerList)` → `waitTicks(5)` →
-  screenshot → `releaseKey`.
+- The tab list needs two deliberate steps in a one-player singleplayer world:
+  add a list objective (`scoreboard objectives add nonick_test dummy` then
+  `setdisplay list nonick_test`) because vanilla hides the overlay for a lone
+  player, and set the key state directly with
+  `context.runOnClient(m -> m.options.keyPlayerList.setDown(true))`. Keyboard
+  events can be dropped when the window has no focus, and then the screenshot
+  proves nothing. Release with `setDown(false)` after the shot.
 - Screens are checked by truth, not by trust:
   `computeOnClient(minecraft -> ClientCompat.currentScreen(minecraft) != null)`
   throws an `AssertionError` on false.
@@ -143,6 +147,10 @@ Expected pairs, and the failure each one exposes:
 | `nonick-status` | client commands run in a loaded world |
 | `nonick-chat` | chat + server-message rewriting with a live nick |
 | `nonick-tab` | tab-list rendering while `keyPlayerList` is held |
+
+The one-player tab list is a single row near the top centre with a head icon
+and a ping icon. It is small, and easy to mistake for a nametag. Read the text
+inside the row, not the shape of the box.
 
 Done when: every screenshot shows the rewritten text a human would read.
 
