@@ -42,6 +42,12 @@ drawn.
 Everything happens on your client. No packets are sent to the server except
 the optional Mojang UUID lookup described below.
 
+## Before you use it
+
+Some servers forbid revealing staff nicknames or hidden identities. NoNick
+only changes your own screen, but using it can still break that server's rules.
+Check the rules before you join.
+
 ## Download
 
 - Modrinth: https://modrinth.com/mod/nonick
